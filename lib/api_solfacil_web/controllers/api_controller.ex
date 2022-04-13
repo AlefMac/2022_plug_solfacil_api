@@ -1,8 +1,8 @@
 defmodule ApiSolfacilWeb.ApiController do
   use Phoenix.Controller
-  
+
   alias ApiSolfacil.Zips
-  alias ApiSolfacil.Zips.Zip 
+  alias ApiSolfacil.Zips.Zip
 
   @url_find_cep Application.get_env(:ulr_api, :find_cep)
 
@@ -11,7 +11,7 @@ defmodule ApiSolfacilWeb.ApiController do
 
     case zip do
       %Zip{} ->
-        struct = zip |> Map.from_struct |> Map.drop([:__meta__, :inserted_at, :updated_at, :id])
+        struct = zip |> Map.from_struct() |> Map.drop([:__meta__, :inserted_at, :updated_at, :id])
         json(conn, struct)
 
       _ ->
@@ -19,7 +19,10 @@ defmodule ApiSolfacilWeb.ApiController do
         response = HTTPoison.get!(link)
         resp = Jason.decode!(response.body)
         formatter_cep = String.replace(resp["cep"], "-", "")
-        save_struct = resp |> Map.put("cep", formatter_cep) |> Zips.create_zip
+        resp 
+        |> Map.put("cep", formatter_cep)
+        |> Zips.create_zip()
+        
         json(conn, resp)
     end
   end

@@ -9,6 +9,10 @@ defmodule ApiSolfacilWeb.Router do
     pipe_through :api
 
     get "/solfacil/:zip", ApiController, :show
+
+    post "/solfacil/register", AccountsController, :create
+
+    post "/solfacil/login", AccountsController, :index
   end
 
   # Enables the Swoosh mailbox preview in development.

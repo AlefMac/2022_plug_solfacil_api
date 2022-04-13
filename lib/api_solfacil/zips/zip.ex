@@ -20,7 +20,18 @@ defmodule ApiSolfacil.Zips.Zip do
   @doc false
   def changeset(zip, attrs) do
     zip
-    |> cast(attrs, [:cep, :bairro, :complemento, :logradouro, :localidade, :uf, :ibge, :gia, :ddd, :siafi])
+    |> cast(attrs, [
+      :cep,
+      :bairro,
+      :complemento,
+      :logradouro,
+      :localidade,
+      :uf,
+      :ibge,
+      :gia,
+      :ddd,
+      :siafi
+    ])
     |> validate_required([:cep, :bairro, :uf, :ibge, :ddd])
   end
 end

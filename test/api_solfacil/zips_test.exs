@@ -8,7 +8,18 @@ defmodule ApiSolfacil.ZipsTest do
 
     import ApiSolfacil.ZipsFixtures
 
-    @invalid_attrs %{complement: nil, ddd: nil, district: nil, gia: nil, ibge: nil, locality: nil, public_place: nil, siafi: nil, uf: nil, zip_code: nil}
+    @invalid_attrs %{
+      complement: nil,
+      ddd: nil,
+      district: nil,
+      gia: nil,
+      ibge: nil,
+      locality: nil,
+      public_place: nil,
+      siafi: nil,
+      uf: nil,
+      zip_code: nil
+    }
 
     test "list_zips/0 returns all zips" do
       zip = zip_fixture()
@@ -21,7 +32,18 @@ defmodule ApiSolfacil.ZipsTest do
     end
 
     test "create_zip/1 with valid data creates a zip" do
-      valid_attrs = %{complement: "some complement", ddd: "some ddd", district: "some district", gia: "some gia", ibge: "some ibge", locality: "some locality", public_place: "some public_place", siafi: "some siafi", uf: "some uf", zip_code: "some zip_code"}
+      valid_attrs = %{
+        complement: "some complement",
+        ddd: "some ddd",
+        district: "some district",
+        gia: "some gia",
+        ibge: "some ibge",
+        locality: "some locality",
+        public_place: "some public_place",
+        siafi: "some siafi",
+        uf: "some uf",
+        zip_code: "some zip_code"
+      }
 
       assert {:ok, %Zip{} = zip} = Zips.create_zip(valid_attrs)
       assert zip.complement == "some complement"
@@ -42,7 +64,19 @@ defmodule ApiSolfacil.ZipsTest do
 
     test "update_zip/2 with valid data updates the zip" do
       zip = zip_fixture()
-      update_attrs = %{complement: "some updated complement", ddd: "some updated ddd", district: "some updated district", gia: "some updated gia", ibge: "some updated ibge", locality: "some updated locality", public_place: "some updated public_place", siafi: "some updated siafi", uf: "some updated uf", zip_code: "some updated zip_code"}
+
+      update_attrs = %{
+        complement: "some updated complement",
+        ddd: "some updated ddd",
+        district: "some updated district",
+        gia: "some updated gia",
+        ibge: "some updated ibge",
+        locality: "some updated locality",
+        public_place: "some updated public_place",
+        siafi: "some updated siafi",
+        uf: "some updated uf",
+        zip_code: "some updated zip_code"
+      }
 
       assert {:ok, %Zip{} = zip} = Zips.update_zip(zip, update_attrs)
       assert zip.complement == "some updated complement"

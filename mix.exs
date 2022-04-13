@@ -46,7 +46,8 @@ defmodule ApiSolfacil.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.8"},
       {:oban, "~> 2.11"},
-      {:joken, "~> 2.4"}
+      {:joken, "~> 2.4"},
+      {:pbkdf2_elixir, "~> 2.0"}
     ]
   end
 
