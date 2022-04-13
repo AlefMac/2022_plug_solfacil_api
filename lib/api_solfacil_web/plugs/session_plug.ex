@@ -1,5 +1,7 @@
 defmodule ApiSolfacilWeb.SessionPlug do
   import Plug.Conn
+  import ApiSolfacilWeb.VerifyKeyToken
+  
   use Joken.Config
 
   alias ApiSolfacil.Accounts
@@ -27,16 +29,4 @@ defmodule ApiSolfacilWeb.SessionPlug do
         assign(conn, :ok, "pass authorized")
     end
   end
-
-  defp verify_key([h | t]) do
-    {key, _} = h
-
-    if key == "authorization" do
-      h
-    else
-      verify_key(t)
-    end
-  end
-
-  defp verify_key([]), do: {:error, ""}
 end

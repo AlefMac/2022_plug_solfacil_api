@@ -10,6 +10,8 @@ defmodule ApiSolfacilWeb.Router do
 
     get "/solfacil/:zip", ApiController, :show
 
+    get "/solfacil/get/csv", ApiController, :upload
+
     post "/solfacil/register", AccountsController, :create
 
     post "/solfacil/login", AccountsController, :index

@@ -1,8 +1,13 @@
 defmodule ApiSolfacilWeb.ApiController do
   use Phoenix.Controller
+  use Joken.Config
+
+  import ApiSolfacilWeb.VerifyKeyToken
 
   alias ApiSolfacil.Zips
   alias ApiSolfacil.Zips.Zip
+
+  plug ApiSolfacilWeb.SessionPlug when action in [:show, :upload]
 
   @url_find_cep Application.get_env(:ulr_api, :find_cep)
 
@@ -26,4 +31,21 @@ defmodule ApiSolfacilWeb.ApiController do
         json(conn, resp)
     end
   end
+
+  def upload(conn, _params) do
+    headers = conn.req_headers
+    {_, token} = verify_key(headers)
+
+    token = String.replace(token, "Bearer", "") |> String.trim()
+
+    {:ok, info} = Joken.Signer.verify(token, Joken.Signer.create("HS256", "secret"))
+
+    email = info["email"]
+
+    json(conn, %{"status" => true, "message" => "Enviado com sucesso"})
+  end
+
+  # defp decode_token() do
+  
+  # end
 end

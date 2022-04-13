@@ -1,4 +1,7 @@
 defmodule ApiSolfacilWeb.AccountsController do
+    @moduledoc """
+    module responsible for registering and validating user
+    """
     use Phoenix.Controller
     use Joken.Config
 
@@ -8,6 +11,9 @@ defmodule ApiSolfacilWeb.AccountsController do
     alias ApiSolfacil.Accounts.User
     alias ApiSolfacil.Accounts.Tokens
 
+    @doc """
+    create new user
+    """
     def create(conn, params) do
         create = Accounts.create_user(params)
 
@@ -31,6 +37,9 @@ defmodule ApiSolfacilWeb.AccountsController do
         end
     end
 
+    @doc """
+    validate user
+    """
     def index(conn, %{"email" => email, "password" => password}) do
         account = Accounts.get_user_by_email(email) 
         case account do
@@ -61,6 +70,7 @@ defmodule ApiSolfacilWeb.AccountsController do
                         }
                     )
                 end
+            
             _ -> 
                 json(conn, 
                     %{
@@ -75,11 +85,11 @@ defmodule ApiSolfacilWeb.AccountsController do
     ## Generating the jwt
     defp generate_token(email) do
         token_config = %{} # empty config
-        token_config = Map.put(token_config, "scope", %Joken.Claim{
+        token_config = Map.put(token_config, "email", %Joken.Claim{
         generate: fn -> email end
         })
-        signer = Joken.Signer.create("HS256", "my secret")
-        {:ok, claims} = Joken.generate_claims(token_config, %{"extra"=> "lmx0w948"})
+        signer = Joken.Signer.create("HS256", "secret")
+        {:ok, claims} = Joken.generate_claims(token_config, %{"extra"=> "api"})
         {:ok, jwt, claims} = Joken.encode_and_sign(claims, signer)
         [jwt, claims]
     end
