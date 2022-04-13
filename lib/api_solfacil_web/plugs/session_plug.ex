@@ -1,6 +1,6 @@
 defmodule ApiSolfacilWeb.SessionPlug do
   import Plug.Conn
-  import ApiSolfacilWeb.VerifyKeyToken
+  import ApiSolfacilWeb.TokenManager
   
   use Joken.Config
 

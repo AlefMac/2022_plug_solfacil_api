@@ -6,7 +6,8 @@ defmodule ApiSolfacilWeb.AccountsController do
     use Joken.Config
 
     import Pbkdf2
-    
+    import ApiSolfacilWeb.TokenManager
+
     alias ApiSolfacil.Accounts
     alias ApiSolfacil.Accounts.User
     alias ApiSolfacil.Accounts.Tokens
@@ -79,18 +80,5 @@ defmodule ApiSolfacilWeb.AccountsController do
                     }
                 )
         end
-    end
-
-
-    ## Generating the jwt
-    defp generate_token(email) do
-        token_config = %{} # empty config
-        token_config = Map.put(token_config, "email", %Joken.Claim{
-        generate: fn -> email end
-        })
-        signer = Joken.Signer.create("HS256", "secret")
-        {:ok, claims} = Joken.generate_claims(token_config, %{"extra"=> "api"})
-        {:ok, jwt, claims} = Joken.encode_and_sign(claims, signer)
-        [jwt, claims]
     end
 end

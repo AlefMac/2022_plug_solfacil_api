@@ -2,7 +2,7 @@ defmodule ApiSolfacilWeb.ApiController do
   use Phoenix.Controller
   use Joken.Config
 
-  import ApiSolfacilWeb.VerifyKeyToken
+  import ApiSolfacilWeb.TokenManager
 
   alias ApiSolfacil.Zips
   alias ApiSolfacil.Zips.Zip
@@ -44,8 +44,4 @@ defmodule ApiSolfacilWeb.ApiController do
 
     json(conn, %{"status" => true, "message" => "Enviado com sucesso"})
   end
-
-  # defp decode_token() do
-  
-  # end
 end
