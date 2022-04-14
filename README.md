@@ -6,14 +6,39 @@ To start your Phoenix server:
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+### Routes
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+we have four routes in our application
 
-## Learn more
+```elixir
+scope "/api", ApiSolfacilWeb do
+    pipe_through :api
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+    post "/solfacil/register", AccountsController, :create
+
+    post "/solfacil/login", AccountsController, :index
+
+    get "/solfacil/:zip", ApiController, :show
+
+    get "/solfacil/get/csv", ApiController, :upload
+end
+```
+
+
+The first route you can register with "email" and "password",
+
+The second route you can authenticate yourself,
+
+The third route you can search for a specific zip code
+
+The fourth route you will receive in the email a csv file a list of searched zip codes or a failure txt file
+
+
+### params
+
+```json
+{
+  "email":"some_email@example.com",
+  "password":"******"
+}
+```
