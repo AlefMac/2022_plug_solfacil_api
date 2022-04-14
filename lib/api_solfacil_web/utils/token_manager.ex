@@ -3,11 +3,7 @@ defmodule ApiSolfacilWeb.TokenManager do
     def verify_key([h | t]) do
         {key, _} = h
 
-        if key == "authorization" do
-            h
-        else
-            verify_key(t)
-        end
+        if key == "authorization", do: h, else: verify_key(t)
     end
     def verify_key([]), do: {:error, ""}
 
@@ -23,5 +19,4 @@ defmodule ApiSolfacilWeb.TokenManager do
         {:ok, jwt, claims} = Joken.encode_and_sign(claims, signer)
         [jwt, claims]
     end
-
 end

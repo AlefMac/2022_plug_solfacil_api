@@ -6,6 +6,7 @@ defmodule ApiSolfacilWeb.ApiController do
 
   alias ApiSolfacil.Zips
   alias ApiSolfacil.Zips.Zip
+  alias ApiSolfacilWeb.SendEmailWorker
 
   plug ApiSolfacilWeb.SessionPlug when action in [:show, :upload]
 
@@ -40,8 +41,10 @@ defmodule ApiSolfacilWeb.ApiController do
 
     {:ok, info} = Joken.Signer.verify(token, Joken.Signer.create("HS256", "secret"))
 
-    email = info["email"]
+    %{email: info["email"]}
+    |> SendEmailWorker.new(queue: :default, max_attempts: 2)
+    |> Oban.insert()
 
-    json(conn, %{"status" => true, "message" => "Enviado com sucesso"})
+    json(conn, %{"status" => true, "message" => "Enviado com sucesso para o seu email"})
   end
 end

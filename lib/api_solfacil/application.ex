@@ -15,9 +15,10 @@ defmodule ApiSolfacil.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ApiSolfacil.PubSub},
       # Start the Endpoint (http/https)
-      ApiSolfacilWeb.Endpoint
+      ApiSolfacilWeb.Endpoint,
       # Start a worker by calling: ApiSolfacil.Worker.start_link(arg)
       # {ApiSolfacil.Worker, arg}
+      {Oban, oban_config()}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -32,5 +33,9 @@ defmodule ApiSolfacil.Application do
   def config_change(changed, _new, removed) do
     ApiSolfacilWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp oban_config do
+    Application.fetch_env!(:api_solfacil, Oban)
   end
 end
